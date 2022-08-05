@@ -1,15 +1,12 @@
 import newsService from "../services/newsService";
 import * as HttpStatus from "http-status"
+import helper from "../infra/helper";
 
 class NewsController {
 
-    sendResponse = function (res, statusCode, data) {
-        res.status(statusCode).json(data);
-    }
-
     get(req, res) {
         newsService.get()
-            .then(news => this.sendResponse(res, HttpStatus.Ok, news))
+            .then(news => helper.sendResponse(res, HttpStatus.Ok, news))
             .catch(error => console.error.bind(console, 'Error' + error));
     }
 
@@ -17,7 +14,7 @@ class NewsController {
         const _id = req.params.id;
 
         newsService.getById(_id)
-            .then(news => this.sendResponse(res, HttpStatus.Ok, news))
+            .then(news => helper.sendResponse(res, HttpStatus.Ok, news))
             .catch(error => console.error.bind(console, 'Error' + error));
 
     }
@@ -27,7 +24,7 @@ class NewsController {
 
         newsService.create(vm)
             .then(news =>
-                this.sendResponse(res, HttpStatus.OK, "Noticia cadastrada com sucesso!"))
+                helper.sendResponse(res, HttpStatus.OK, "Noticia cadastrada com sucesso!"))
             .catch(error => console.error.bind(console, 'Error' + error));
     }
 
@@ -37,7 +34,7 @@ class NewsController {
 
         newsService.create(news)
             .then(news =>
-                this.sendResponse(res, HttpStatus.OK, news.title + " foi atualizada com sucesso!"))
+                helper.sendResponse(res, HttpStatus.OK, news.title + " foi atualizada com sucesso!"))
             .catch(error => console.error.bind(console, 'Error' + error));
 
     }
@@ -47,7 +44,7 @@ class NewsController {
 
         newsService.delete(_id)
             .then(() =>
-                this.sendResponse(res, HttpStatus.OK, "Noticia deletada com sucesso!"))
+            helper.sendResponse(res, HttpStatus.OK, "Noticia deletada com sucesso!"))
             .catch(error => console.error.bind(console, 'Error' + error));
     }
 
